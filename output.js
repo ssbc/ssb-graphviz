@@ -1,6 +1,6 @@
 const insertCss = require('insert-css')
 const Sbot = require('ssb-client')
-const Viz = require('../')
+const Viz = require('./')
 
 insertCss(`
   html, body {

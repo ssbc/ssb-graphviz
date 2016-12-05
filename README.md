@@ -1,24 +1,23 @@
-# ssb-viz
+# ssb-graphviz
 
 visualize the ssb network graph
 
-```shell
-npm install ssb-viz -g
-```
+(**unfinished**)
 
-## scripts
-
-### build
+## get started
 
 ```sh
-npm run build
-```
-
-### start
-
-```sh
+git clone 'ssb://%hNm67sfnZFtWkD/+1qxH3UfzhXykfpKtOL1C/XbLANA=.sha256' ssb-graphviz
+cd ssb-graphviz
+npm install
 npm start
 ```
+
+## design
+
+- `/graph` show graph
+- `/nodes/:id` show node
+- `/edges/:from/:to` show edge
 
 ## license
 
