@@ -6,6 +6,8 @@ visualize the ssb network graph
 
 ## get started
 
+with [`git-ssb`](https://git-ssb.celehner.com/%25n92DiQh7ietE%2BR%2BX%2FI403LQoyf2DtR3WQfCkDKlheQU%3D.sha256) installed (`npm i -g git-ssb`):
+
 ```sh
 git clone 'ssb://%hNm67sfnZFtWkD/+1qxH3UfzhXykfpKtOL1C/XbLANA=.sha256' ssb-graphviz
 cd ssb-graphviz
