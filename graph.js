@@ -16,7 +16,10 @@ function Graph (sbot, cb) {
           const edges = friendOfFriends.map(friendOfFriend => {
             return {
               fromId: friend,
-              toId: friendOfFriend
+              toId: friendOfFriend,
+              data: {
+                hidden: true
+              }
             }
           })
           return [
