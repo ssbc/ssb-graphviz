@@ -1,6 +1,5 @@
 const pull = require('pull-stream')
 const Sbot = require('ssb-client')
-const avatar = require('ssb-avatar')
 const waterfall = require('run-waterfall')
 
 const { keys } = Object
@@ -22,7 +21,14 @@ function Graph (sbot, cb) {
 }
 
 function buildNodes(friends) {
-  return keys(friends).map(id => ({ id }) )
+  return keys(friends).map(id => {
+    return {
+      id,
+      data: {
+        friends: keys(friends[id])
+      }
+    }
+  })
 }
 
 function buildLinks(friends) {
