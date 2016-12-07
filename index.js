@@ -36,6 +36,7 @@ module.exports = function (sbot, cb) {
 
     function handleNodeHover (node) {
       if (node === undefined) return
+      console.log('handleNodeHover node: ', node)
 
       node.links
         .map(link => display.getLink(link.id))
