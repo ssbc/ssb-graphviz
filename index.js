@@ -1,7 +1,7 @@
 const fs = require('fs')
 const Path = require('path')
 const fromJson = require('ngraph.fromjson')
-const Renderer = require('ngraph.pixel')
+const Renderer = require('./renderer')
 const Graph = require('./graph')
 
 const config = {
@@ -29,22 +29,7 @@ module.exports = function (sbot, cb) {
     const str = JSON.stringify(data)
     var graph = fromJson(str)
     var display = Renderer(graph, config)
-
-    display.on('nodehover', handleNodeHover)
     cb(null, display)
-
-
-    function handleNodeHover (node) {
-      if (node === undefined) return
-
-      node.links
-        .map(link => display.getLink(link.id))
-        .forEach(linkUI => {
-          let color = 0x80ffffff
-          linkUI.fromColor = color
-          linkUI.toColor = color
-        })
-    }
   })
 }
 
