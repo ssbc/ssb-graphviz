@@ -1,5 +1,7 @@
 const insertCss = require('insert-css')
 const Sbot = require('ssb-client')
+const waterfall = require('run-waterfall')
+
 const Viz = require('./')
 
 insertCss(`
@@ -12,21 +14,18 @@ insertCss(`
     margin: 0;
   }
 
-  #avatar {
+  .avatar {
     position: fixed;
     left: 10px;
     bottom: 10px;
     color: #fff;
   }
 
-  #avatar img {
+  .avatar .image {
     max-height: 160px;
   }
 `)
- 
-Sbot((err, sbot) => {
-  Viz(sbot, (err, viz) => {
-    if (err) throw err
-    sbot.close()
-  })
+
+waterfall([Sbot, Viz], (err) => {
+  if (err) throw err
 })

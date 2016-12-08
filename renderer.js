@@ -1,13 +1,11 @@
 const Renderer = require('ngraph.pixel')
-const h = require('hyperscript')
 const avatar = require('ssb-avatar')
-const Sbot = require('ssb-client')
-const morph = require('morphdom')
+const html = require('yo-yo')
 
 module.exports = createRenderer
 
 function createRenderer (graph, config, sbot) {
-  var avatarEl = h('div#avatar')
+  var avatarEl = html`<div class="avatar" />`
   document.body.appendChild(avatarEl)
 
   var display = Renderer(graph, config)
@@ -19,19 +17,20 @@ function createRenderer (graph, config, sbot) {
   function handleNodeHover (node) {
     if (node === undefined) return
 
-    // TODO figure out why we have to start a fresh client.
-    Sbot((err, sbot) => {
-      avatar(sbot, node.id, node.id, (err, { name, image }) => {
-        const imgSrc = image ? `http://localhost:7777/${image}` : ''
+    avatar(sbot, node.id, node.id, (err, { name, image }) => {
+      // handle this error!
+      if (err) throw err
 
-        var newAvatarEl = h('div#avatar', [
-          h('img', { src: imgSrc }),
-          h('div', name)
-        ])
+      const imgSrc = image ? `http://localhost:7777/${image}` : ''
 
-        morph(avatarEl, newAvatarEl)
-        sbot.close()
-      })
+      const newAvatarEl = html`
+        <div class="avatar">
+          <img class="image" src=${imgSrc} />
+          <div class="name">${name}</div>
+        </div>
+      `
+
+      html.update(avatarEl, newAvatarEl)
     })
 
     display.forEachLink(linkUI => {
@@ -45,8 +44,8 @@ function createRenderer (graph, config, sbot) {
       const isToFriend = friends.indexOf(to.id) > -1
       const involvesFoaF = isFromFriend || isToTarget
 
-      let fromColor = 0x000066
-      let toColor = 0x000066
+      var fromColor = 0x000066
+      var toColor = 0x000066
 
       const close = 0xffffff
       const mid = 0xa94caf
@@ -55,24 +54,19 @@ function createRenderer (graph, config, sbot) {
       if (isFromTarget) {
         fromColor = close
         toColor = mid
-      }
-      else if (isToTarget) {
+      } else if (isToTarget) {
         fromColor = mid
         toColor = close
-      }
-      else if (involvesFoaF && isFromFriend) {
+      } else if (involvesFoaF && isFromFriend) {
         fromColor = mid
         toColor = far
-      }
-      else if (involvesFoaF && isToFriend) {
+      } else if (involvesFoaF && isToFriend) {
         fromColor = far
         toColor = mid
       }
 
-
       linkUI.fromColor = fromColor
       linkUI.toColor = toColor
     })
-
   }
 }

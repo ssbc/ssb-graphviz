@@ -1,5 +1,3 @@
-const pull = require('pull-stream')
-const Sbot = require('ssb-client')
 const waterfall = require('run-waterfall')
 
 const { keys } = Object
@@ -10,7 +8,7 @@ function Graph (sbot, cb) {
   waterfall([
     (cb) => sbot.friends.all(cb),
     (friends, cb) => {
-      const filteredFriends = friends // activeFriends(friends) 
+      const filteredFriends = friends // activeFriends(friends)
 
       cb(null, {
         nodes: buildNodes(filteredFriends),
@@ -20,7 +18,7 @@ function Graph (sbot, cb) {
   ], cb)
 }
 
-function buildNodes(friends) {
+function buildNodes (friends) {
   return keys(friends).map(id => {
     return {
       id,
@@ -31,11 +29,10 @@ function buildNodes(friends) {
   })
 }
 
-function buildLinks(friends) {
+function buildLinks (friends) {
   return keys(friends).reduce((sofar, friend) => {
     const friendOfFriends = keys(friends[friend])
       .filter(id => friends[friend][id] === true)
-      // .filter(id => keys(friends).indexOf(id) > -1)
 
     const edges = friendOfFriends.map(friendOfFriend => {
       return {
@@ -52,9 +49,9 @@ function buildLinks(friends) {
       ...edges
     ]
   }, [])
-
 }
 
+/*
 function activeFriends (friends) {
   return keys(friends)
     .reduce(
@@ -67,4 +64,4 @@ function activeFriends (friends) {
       {}
     )
 }
-
+*/

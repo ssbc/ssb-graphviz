@@ -1,16 +1,14 @@
-const fs = require('fs')
-const Path = require('path')
 const fromJson = require('ngraph.fromjson')
 const Renderer = require('./renderer')
 const Graph = require('./graph')
 
 const config = {
   physics: {
-    springLength : 80,
-    springCoeff : 0.0001,
+    springLength: 80,
+    springCoeff: 0.0001,
     gravity: -1.4,
-    theta : 0.4,
-    dragCoeff : 0.04
+    theta: 0.4,
+    dragCoeff: 0.04
   },
   link: (link) => {
     // if (link.data.hidden) return
