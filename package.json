@@ -24,8 +24,10 @@
   "dependencies": {
     "electro": "^2.0.2",
     "electron": "^1.4.4",
+    "hyperscript": "^2.0.2",
     "insert-css": "^1.0.0",
     "inu": "^3.1.3",
+    "morphdom": "^2.2.1",
     "ngraph.fromjson": "^0.1.8",
     "ngraph.pixel": "^2.2.0",
     "pull-stream": "^3.4.5",

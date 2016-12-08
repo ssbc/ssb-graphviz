@@ -11,6 +11,17 @@ insertCss(`
     padding: 0;
     margin: 0;
   }
+
+  #avatar {
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    color: #fff;
+  }
+
+  #avatar img {
+    max-height: 160px;
+  }
 `)
  
 Sbot((err, sbot) => {

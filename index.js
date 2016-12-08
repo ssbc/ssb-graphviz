@@ -3,7 +3,6 @@ const Path = require('path')
 const fromJson = require('ngraph.fromjson')
 const Renderer = require('./renderer')
 const Graph = require('./graph')
-const avatar = require('ssb-avatar')
 
 const config = {
   physics: {
@@ -29,7 +28,7 @@ module.exports = function (sbot, cb) {
     if (err) return cb(err)
     const str = JSON.stringify(data)
     var graph = fromJson(str)
-    var display = Renderer(graph, config)
+    var display = Renderer(graph, config, sbot)
 
     cb(null, display)
   })
