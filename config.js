@@ -1,3 +1,5 @@
+const defined = require('defined')
+
 const config = {
   physics: {
     springLength: 80,
@@ -15,7 +17,11 @@ const config = {
       toColor: 0x000066
     }
   },
-  container: document.body.querySelector('main')
+  container: document.body.querySelector('main'),
+  blobsUrl: defined(
+    process.env.BLOBS_URL,
+    'http://localhost:7777/'
+  )
 }
 
 module.exports = config
