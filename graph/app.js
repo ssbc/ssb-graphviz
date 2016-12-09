@@ -1,7 +1,9 @@
+const { assign } = Object
 const xhr = require('xhr')
-const { Domain } = require('inux')
+const { Domain, run } = require('inux')
 const async = require('pull-async')
 const html = require('inu/html')
+const pull = require('pull-stream')
 
 const { SET, SET_FOCUS, FETCH, FOCUS, set, setFocus, fetch } = require('./actions')
 const GraphView = require('./view')
@@ -44,7 +46,7 @@ function GraphApp (config) {
       [FOCUS]: (id) => {
         return pull.values([
           setFocus(id),
-          fetchProfile(id)
+          run(fetchProfile(id))
         ])
       }
     },
@@ -56,8 +58,8 @@ function GraphApp (config) {
 
         return html`
           <div class='main'>
-            ${profileView(focusedProfile, dispatch)}
             ${graphView(graph, dispatch)}
+            ${profileView(focusedProfile, dispatch)}
           </div>
         `
       }]

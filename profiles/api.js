@@ -6,8 +6,8 @@ module.exports = ProfilesApi
 
 function ProfilesApi (ssb, config) {
   return (req, res, next) => {
-    if (req.url.substring(0, 15) === '/api/profiles/') {
-      const id = req.url.substring(16)
+    if (req.url.substring(0, 14) === '/api/profiles/') {
+      const id = req.url.substring(14)
       sendProfile(id, req, res)
     } else next()
   }
@@ -25,8 +25,8 @@ function ProfilesApi (ssb, config) {
   function getProfile (id, cb) {
     Avatar(ssb, id, id, (err, { name, image } = {}) => {
       if (err) return cb(err)
-      const imgSrc = image ? `/images/${image}` : ''
-      cb(null, { id, name, image })
+      const imgSrc = image ? `/blobs/${image}` : null
+      cb(null, { id, name, image: imgSrc })
     })
   }
 }

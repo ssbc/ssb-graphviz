@@ -1,28 +1,38 @@
 const { assign } = Object
-const Ngraph = require('ngraph.graph')
 const Renderer = require('ngraph.pixel')
 const html = require('inu/html')
+const { run } = require('inux')
 const Widget = require('cache-element/widget')
 
-const { focusNode } = require('./actions')
+const fromJson = require('ngraph.fromjson')
+
+const { focus } = require('./actions')
 
 module.exports = GraphView
 
 function GraphView (config) {
-  var ngraph = Ngraph()
-  var dispatch
+  var ngraph
+  var display
 
   return Widget({
     render: function (graph, dispatch) {
       return html`<div class='graph'></div>`
     },
-    onupdate: function (el, graph, _dispatch) {
-      updateGraph(graph)
-      dispatch = _dispatch
-    },
-    onload: initGraph
+    onupdate: function (el, graph, dispatch) {
+      if (!display) {
+        ngraph = fromJson(graph)
+        display = Display(el)
+        display.on('nodehover', NodeHoverHandler(dispatch))
+      } else {
+        // TODO a better way to update the graph
+        // updateGraph(graph)
+        // display.off('nodehover')
+        // display.on('nodehover', NodeHoverHandler(dispatch))
+      }
+    }
   })
 
+  /*
   function updateGraph ({ nodes, links }) {
     ngraph.beginUpdate()
     ngraph.forEachLink(link => {
@@ -39,17 +49,18 @@ function GraphView (config) {
     })
     ngraph.endUpdate()
   }
+  */
 
-  function initGraph (node) {
+  function Display (node) {
     const ngraphConfig = assign({ container: node }, config)
-    var display = Renderer(ngraph, ngraphConfig)
+    return Renderer(ngraph, ngraphConfig)
+  }
 
-    display.on('nodehover', handleNodeHover)
-
-    function handleNodeHover (node) {
+  function NodeHoverHandler (dispatch) {
+    return (node) => {
       if (node === undefined) return
 
-      dispatch(focusProfile(node.id))
+      dispatch(run(focus(node.id)))
 
       display.forEachLink(linkUI => {
         const { from, to } = linkUI

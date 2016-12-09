@@ -20,7 +20,7 @@ var app = App(config)
 if (process.env.NODE_ENV !== 'production') {
   app = log(app)
 }
-const { views, models } = start(app)
+const { views } = start(app)
 const main = document.createElement('div')
 main.className = 'main'
 document.body.appendChild(main)

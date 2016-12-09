@@ -4,27 +4,26 @@ const css = require('sheetify')
 module.exports = ProfileView
 
 css`
-  .avatar {
+  .profile {
     position: fixed;
     left: 10px;
     bottom: 10px;
     color: #fff;
   }
 
-  .avatar .image {
+  .profile .image {
     max-height: 160px;
   }
 `
 
 function ProfileView (config) {
-  return (profile, dispatch) => {
-    if (profile === undefined) return
+  return (profile = {}, dispatch) => {
     const { name, image } = profile
 
     return html`
-      <div class="profile">
-        <img class="image" src=${image} />
-        <div class="name">${name}</div>
+      <div id='profile' class='profile'>
+        ${image && html`<img class='image' src=${image} />`}
+        <div class='name'>${name}</div>
       </div>
     `
   }

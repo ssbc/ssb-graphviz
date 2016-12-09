@@ -12,7 +12,7 @@ function GraphApi (ssb, config) {
     switch (req.url) {
       case '/api/graph':
         sendGraph(req, res)
-        break;
+        break
       default:
         next()
     }

@@ -1,6 +1,4 @@
 const { join } = require('path')
-const sendJson = require('send-data/json')
-const sendError = require('send-data/error')
 const pull = require('pull-stream')
 const toPull = require('stream-to-pull-stream')
 const Assets = require('bankai')
@@ -25,10 +23,7 @@ function AssetsApi (ssb, config) {
   }
 
   function sendBlob (id, req, res) {
-    pull(
-      ssb.blobs.get(id),
-      toPull(res)
-    )
+    pull(getBlob(id), toPull(res))
   }
 
   function getBlob (id) {
