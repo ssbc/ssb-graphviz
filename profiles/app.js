@@ -1,7 +1,7 @@
 const { assign } = Object
 const { Domain } = require('inux')
 const pull = require('pull-stream')
-const async = require('pull-async')
+const pullContinuable = require('pull-cont')
 const xhr = require('xhr')
 
 const { SET_ONE, FETCH_ONE, setOne } = require('./actions')
@@ -32,14 +32,14 @@ function ProfilesApp (config) {
         )
         if (hasProfile) return
 
-        return async(cb => {
+        return pullContinuable(cb => {
           xhr({
             url: `/api/profiles/${profileId}`,
             json: true
           }, (err, resp, { body } = {}) => {
             if (err) return cb(err)
             if (!body) return
-            cb(null, setOne(body))
+            cb(null, pull.values([setOne(body)]))
           })
         })
       }

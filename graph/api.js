@@ -1,6 +1,7 @@
 const waterfall = require('run-waterfall')
 const sendJson = require('send-data/json')
 const sendError = require('send-data/error')
+const Routes = require('http-routes')
 
 const buildLinks = require('./helpers/build-links')
 const buildNodes = require('./helpers/build-nodes')
@@ -8,15 +9,13 @@ const buildNodes = require('./helpers/build-nodes')
 module.exports = GraphApi
 
 function GraphApi (ssb, config) {
-  return (req, res, next) => {
-    switch (req.url) {
-      case '/api/graph':
+  return Routes([
+    ['/api/graph', {
+      get: (req, res, next) => {
         sendGraph(req, res)
-        break
-      default:
-        next()
-    }
-  }
+      }
+    }]
+  ])
 
   function sendGraph (req, res) {
     getGraph((err, graph) => {

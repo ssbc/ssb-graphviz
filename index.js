@@ -38,7 +38,7 @@ function Server (ssb, config, reconnect) {
 
   function listen () {
     server.listen(port, host, function () {
-      var hostName = ~host.indexOf(':') ? '[' + host + ']' : host
+      var hostName = ~host.indexOf(':') ? `[${host}]` : host
       console.log(`Listening on http://${hostName}:${port}/`)
     })
   }
@@ -51,7 +51,7 @@ function Server (ssb, config, reconnect) {
 function parseAddr (str, def) {
   if (!str) return def
   var i = str.lastIndexOf(':')
-  if (~i) return {host: str.substr(0, i), port: str.substr(i + 1)}
-  if (isNaN(str)) return {host: str, port: def.port}
-  return {host: def.host, port: str}
+  if (~i) return { host: str.substr(0, i), port: str.substr(i + 1) }
+  if (isNaN(str)) return { host: str, port: def.port }
+  return { host: def.host, port: str }
 }

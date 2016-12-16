@@ -1,16 +1,18 @@
 const Avatar = require('ssb-avatar')
 const sendJson = require('send-data/json')
 const sendError = require('send-data/error')
+const Routes = require('http-routes')
 
 module.exports = ProfilesApi
 
 function ProfilesApi (ssb, config) {
-  return (req, res, next) => {
-    if (req.url.substring(0, 14) === '/api/profiles/') {
-      const id = req.url.substring(14)
-      sendProfile(id, req, res)
-    } else next()
-  }
+  return Routes([
+    ['/api/profiles/:profileId(.*)', {
+      get: (req, res, next) => {
+        sendProfile(req.params.profileId, req, res)
+      }
+    }]
+  ])
 
   function sendProfile (id, req, res) {
     getProfile(id, (err, profile) => {

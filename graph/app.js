@@ -1,11 +1,11 @@
 const { assign } = Object
 const xhr = require('xhr')
 const { Domain, run } = require('inux')
-const async = require('pull-async')
+const pullContinuable = require('pull-cont')
 const html = require('inu/html')
 const pull = require('pull-stream')
 
-const { SET, SET_FOCUS, FETCH, FOCUS, set, setFocus, fetch } = require('./actions')
+const { SET, SET_HOVER, FETCH, HOVER, set, setHover, fetch } = require('./actions')
 const GraphView = require('./view')
 const { fetchOne: fetchProfile } = require('../profiles/actions')
 const ProfileView = require('../profiles/view')
@@ -27,25 +27,25 @@ function GraphApp (config) {
     }),
     update: {
       [SET]: (model, graph) => ({ model: graph }),
-      [SET_FOCUS]: (model, focus) => ({
-        model: assign({}, model, { focus })
+      [SET_HOVER]: (model, hover) => ({
+        model: assign({}, model, { hover })
       })
     },
     run: {
       [FETCH]: () => {
-        return async(cb => {
+        return pullContinuable(cb => {
           xhr({
             url: '/api/graph',
             json: true
           }, (err, resp, { body } = {}) => {
             if (err) return cb(err)
-            cb(null, set(body))
+            cb(null, pull.values([set(body)]))
           })
         })
       },
-      [FOCUS]: (id) => {
+      [HOVER]: (id) => {
         return pull.values([
-          setFocus(id),
+          setHover(id),
           run(fetchProfile(id))
         ])
       }
@@ -53,13 +53,13 @@ function GraphApp (config) {
     routes: [
       ['/', (params, model, dispatch) => {
         const { graph, profiles } = model
-        const { focus } = graph
-        const focusedProfile = focus ? profiles[focus] : undefined
+        const { hover } = graph
+        const hoveredProfile = hover ? profiles[hover] : undefined
 
         return html`
           <div class='main'>
             ${graphView(graph, dispatch)}
-            ${profileView(focusedProfile, dispatch)}
+            ${profileView(hoveredProfile, dispatch)}
           </div>
         `
       }]

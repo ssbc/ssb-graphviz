@@ -4,8 +4,8 @@ module.exports = VizApi
 
 function VizApi (ssb, config) {
   return Stack(...[
-    require('./graph/api')(ssb, config),
-    require('./profiles/api')(ssb, config),
-    require('./assets/api')(ssb, config)
-  ])
+    require('./graph/api'),
+    require('./profiles/api'),
+    require('./assets/api')
+  ].map(m => m(ssb, config)))
 }

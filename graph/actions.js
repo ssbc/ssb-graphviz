@@ -1,22 +1,22 @@
 const { Action } = require('inux')
 
 const SET = Symbol('set')
-const SET_FOCUS = Symbol('setFocus')
+const SET_HOVER = Symbol('setHover')
 const FETCH = Symbol('fetch')
-const FOCUS = Symbol('focus')
+const HOVER = Symbol('hover')
 
 const set = Action(SET)
-const setFocus = Action(SET_FOCUS)
+const setHover = Action(SET_HOVER)
 const fetch = Action(FETCH)
-const focus = Action(FOCUS)
+const hover = Action(HOVER)
 
 module.exports = {
   SET,
-  SET_FOCUS,
+  SET_HOVER,
   FETCH,
-  FOCUS,
+  HOVER,
   set,
-  setFocus,
+  setHover,
   fetch,
-  focus
+  hover
 }

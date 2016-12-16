@@ -6,7 +6,7 @@ const Widget = require('cache-element/widget')
 
 const fromJson = require('ngraph.fromjson')
 
-const { focus } = require('./actions')
+const { hover } = require('./actions')
 
 module.exports = GraphView
 
@@ -60,7 +60,7 @@ function GraphView (config) {
     return (node) => {
       if (node === undefined) return
 
-      dispatch(run(focus(node.id)))
+      dispatch(run(hover(node.id)))
 
       display.forEachLink(linkUI => {
         const { from, to } = linkUI
