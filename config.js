@@ -4,7 +4,7 @@ const config = {
   physics: {
     springLength: 80,
     springCoeff: 0.0001,
-    gravity: -1.4,
+    gravity: -0.2,
     theta: 0.4,
     dragCoeff: 0.04
   },
@@ -13,10 +13,12 @@ const config = {
     // makes linkUI element not exist ? => display.getLink doesn't work
 
     return {
-      fromColor: 0x000066,
-      toColor: 0x000066
+      fromColor: 0xffffff,
+      toColor: 0xffffff,
+      width: '10px'
     }
-  }
+  },
+  clearColor: 0xffffff
 }
 
 module.exports = config

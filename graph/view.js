@@ -73,12 +73,12 @@ function GraphView (config) {
         const isToFriend = friends.indexOf(to.id) > -1
         const involvesFoaF = isFromFriend || isToTarget
 
-        var fromColor = 0x000066
-        var toColor = 0x000066
+        var fromColor = 0xffffff
+        var toColor   = 0xffffff
 
-        const close = 0xffffff
-        const mid = 0xa94caf
-        const far = 0x000066
+        const close = 0xff0894
+        const mid   = 0x9e72ff
+        const far   = 0x56c7e9
 
         if (isFromTarget) {
           fromColor = close

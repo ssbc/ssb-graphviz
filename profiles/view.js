@@ -8,7 +8,8 @@ css`
     position: fixed;
     left: 10px;
     bottom: 10px;
-    color: #fff;
+    color: #222;
+    font-size: 40px;
   }
 
   .profile .image {
