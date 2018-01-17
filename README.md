@@ -15,6 +15,9 @@ npm install
 npm start
 ```
 
+NOTE: dependent on `ssb-friends` plugin, which you need to install.
+This has been deprecated in favour of `ssb-contacts`. This conde needs refactoring to use that
+
 ## design
 
 - `/graph` show graph
