@@ -29,7 +29,7 @@ function GraphApi (ssb, config) {
 
   function getGraph (cb) {
     waterfall([
-      ssb.friends.all,
+      ssb.friends.get,
       (friends, cb) => {
         cb(null, {
           nodes: buildNodes(friends),
